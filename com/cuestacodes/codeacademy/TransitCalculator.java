@@ -5,5 +5,6 @@ class TransitCalculator {
     System.out.println("Welcome to cuestacodes' TransitCalculator");
 
     int i = 1;
+    i = 3;
   }
 }
