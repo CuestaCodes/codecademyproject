@@ -1,11 +1,9 @@
 package com.cuestacodes.codeacademy;
 
 class TransitCalculator {
-  static double singleRide = 2.75;
+  double[] fareOptions = {2.75, 33.00, 127.00};
 
-  static double sevenDayUnlimited = 33.00;
-
-  static double thirtyDayUnlimited = 127.00;
+  String[] fareTypes = {"Pay-per-ride", "7-Day Unlimited", "30-Day Unlimited"};
 
   int numberOfDays;
 
@@ -26,44 +24,49 @@ class TransitCalculator {
       numOfSevenPasses++;
     }
 
-    double priceTotal = numOfSevenPasses * sevenDayUnlimited;
+    double priceTotal = numOfSevenPasses * fareOptions[1];
 
     return priceTotal / numberOfRides;
   }
 
+  // calculates the price per ride for each fare option
   public double[] getRidePrices(){
-    ridePrices[0] = numberOfRides * singleRide / numberOfDays;
+    ridePrices[0] = numberOfRides * fareOptions[0] / numberOfDays;
     ridePrices[1] = unlimited7Price();
-    ridePrices[2] = thirtyDayUnlimited / numberOfDays;
+    ridePrices[2] = fareOptions[2] / numberOfDays;
 
     return ridePrices;
   }
 
-  public void getBestFare(){
-    double bestFare = thirtyDayUnlimited;
+  // determines and recommends the lowest price at the best fare method
+  public String getBestFare(){
+    double bestFare = fareOptions[2];
+
+    String bestFareType = fareTypes[2];
 
     double pricePerRide;
 
     getRidePrices();
 
-    for (double ridePrice : ridePrices ){
-      if (ridePrice < bestFare){
-        bestFare = ridePrice;
+    for (int i = 0 ; i < ridePrices.length ; i++){
+      if (ridePrices[i] < bestFare){
+        bestFare = ridePrices[i];
+
+        bestFareType = fareTypes[i];
       }
     }
 
-    System.out.println("Best fare is $" + bestFare + " per ride");
+    String bestFareFind =  "You should get the " + bestFareType + " at $" + bestFare + " per ride";
+
+    return bestFareFind;
   }
 
   public static void main(String[] args) {
     int daysTravelling;
     int individualRides;
 
-    // test commuters
+    // testing commuters
     TransitCalculator person1 = new TransitCalculator(22, 50);
-
-    System.out.println(person1.unlimited7Price());
-
-    person1.getBestFare();
+    System.out.println(person1.getBestFare());
   }
 }
