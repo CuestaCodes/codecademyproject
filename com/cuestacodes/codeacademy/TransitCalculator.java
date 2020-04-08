@@ -29,6 +29,30 @@ class TransitCalculator {
     return priceTotal / numberOfRides;
   }
 
+  public double[] getRidePrices(){
+    double[] ridePrices = new double [3];
+
+    ridePrices[0] = numberOfRides * singleRide;
+    ridePrices[1] = unlimted7Price();
+    ridePrices[2] = thirtyDayUnlimited;
+  }
+
+  public String getBestFare(){
+    double bestFare = thirtyDayUnlimited;
+
+    double pricePerRide;
+
+    for (double ridePrice : ridePrices ){
+      pricePerRide = ridePrice / numberOfRides;
+
+      if (pricePerRide < bestFare){
+        bestFare = pricePerRide;
+      }
+    }
+
+    System.out.println("You should get the ");
+  }
+
   public static void main(String[] args) {
     int daysTravelling;
     int individualRides;
