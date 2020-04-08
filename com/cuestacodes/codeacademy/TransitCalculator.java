@@ -16,6 +16,7 @@ class TransitCalculator {
     numberOfRides = numOfRides;
   }
 
+  // calculates overall price per ride using 7-Day Unlimited option
   public double unlimited7Price(){
     int numOfSevenPasses = numberOfDays / 7;
 
@@ -23,11 +24,18 @@ class TransitCalculator {
       numOfSevenPasses++;
     }
 
-    return numOfSevenPasses * sevenDayUnlimited;
+    double priceTotal = numOfSevenPasses * sevenDayUnlimited;
+
+    return priceTotal / numberOfRides;
   }
 
   public static void main(String[] args) {
     int daysTravelling;
     int individualRides;
+
+    // test commuters
+    TransitCalculator person1 = new TransitCalculator(22, 50);
+
+    System.out.println(person1.unlimited7Price());
   }
 }
