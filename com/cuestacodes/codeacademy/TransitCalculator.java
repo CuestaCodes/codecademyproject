@@ -1,5 +1,7 @@
 package com.cuestacodes.codeacademy;
 
+import java.util.ArrayList;
+
 class TransitCalculator {
   double[] fareOptions = {2.75, 33.00, 127.00};
 
@@ -12,8 +14,12 @@ class TransitCalculator {
   double[] ridePrices = new double [3];
 
   public TransitCalculator(int numOfDays, int numOfRides){
-    numberOfDays = numOfDays;
-    numberOfRides = numOfRides;
+    if (numOfDays < 0 || numOfDays > 30 || numOfRides < 0) {
+      throw new IllegalArgumentException();
+   } else {
+     numberOfDays = numOfDays;
+     numberOfRides = numOfRides;
+   }
   }
 
   // calculates overall price per ride using 7-Day Unlimited option
@@ -52,7 +58,7 @@ class TransitCalculator {
 
     for (int i = 0 ; i < ridePrices.length ; i++){
       if (ridePrices[i] < bestFare){
-        bestFare = ridePrices[i];
+        bestFare = Math.round(ridePrices[i] * 100.0) / 100.0;
 
         bestFareType = fareTypes[i];
       }
@@ -67,17 +73,17 @@ class TransitCalculator {
     int daysTravelling;
     int individualRides;
 
-    // testing commuters
-    TransitCalculator person1 = new TransitCalculator(22, 50);
-    System.out.println(person1.getBestFare());
+    // testing commuters with varying days travelled and number of rides during that time
+    ArrayList<TransitCalculator> commuters = new ArrayList<TransitCalculator>();
 
-    TransitCalculator person2 = new TransitCalculator(26, 54);
-    System.out.println(person2.getBestFare());
+    commuters.add(new TransitCalculator(22,50));
+    commuters.add(new TransitCalculator(26,54));
+    commuters.add(new TransitCalculator(5,12));
+    commuters.add(new TransitCalculator(14,28));
+    commuters.add(new TransitCalculator(7,2));
 
-    TransitCalculator person3 = new TransitCalculator(5, 12);
-    System.out.println(person3.getBestFare());
-
-    TransitCalculator person4 = new TransitCalculator(14, 28);
-    System.out.println(person4.getBestFare());
+    for (int i = 0 ; i < commuters.size() ; i++){
+      System.out.println(commuters.get(i).getBestFare());
+    }
   }
 }
