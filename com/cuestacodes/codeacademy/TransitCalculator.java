@@ -2,6 +2,8 @@ package com.cuestacodes.codeacademy;
 
 import java.util.ArrayList;
 
+// Java program that calulates the best fare option for a commuter based on days travelling,
+// number of rides expected to take during that time, age and if the commuter has a disability
 class TransitCalculator {
   double[] fareOptions = {2.75, 33.00, 127.00};
 
