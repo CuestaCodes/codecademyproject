@@ -26,14 +26,16 @@ class TransitCalculator {
 
     double priceTotal = numOfSevenPasses * fareOptions[1];
 
-    return priceTotal / numberOfRides;
+    double sevenPrice = priceTotal / numberOfRides;
+
+    return sevenPrice;
   }
 
   // calculates the price per ride for each fare option
   public double[] getRidePrices(){
-    ridePrices[0] = numberOfRides * fareOptions[0] / numberOfDays;
+    ridePrices[0] = fareOptions[0];
     ridePrices[1] = unlimited7Price();
-    ridePrices[2] = fareOptions[2] / numberOfDays;
+    ridePrices[2] = fareOptions[2] / numberOfRides;
 
     return ridePrices;
   }
@@ -68,5 +70,14 @@ class TransitCalculator {
     // testing commuters
     TransitCalculator person1 = new TransitCalculator(22, 50);
     System.out.println(person1.getBestFare());
+
+    TransitCalculator person2 = new TransitCalculator(26, 54);
+    System.out.println(person2.getBestFare());
+
+    TransitCalculator person3 = new TransitCalculator(5, 12);
+    System.out.println(person3.getBestFare());
+
+    TransitCalculator person4 = new TransitCalculator(14, 28);
+    System.out.println(person4.getBestFare());
   }
 }
