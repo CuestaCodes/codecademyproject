@@ -11,6 +11,8 @@ class TransitCalculator {
 
   int numberOfRides;
 
+  double[] ridePrices = new double [3];
+
   public TransitCalculator(int numOfDays, int numOfRides){
     numberOfDays = numOfDays;
     numberOfRides = numOfRides;
@@ -30,27 +32,27 @@ class TransitCalculator {
   }
 
   public double[] getRidePrices(){
-    double[] ridePrices = new double [3];
+    ridePrices[0] = numberOfRides * singleRide / numberOfDays;
+    ridePrices[1] = unlimited7Price();
+    ridePrices[2] = thirtyDayUnlimited / numberOfDays;
 
-    ridePrices[0] = numberOfRides * singleRide;
-    ridePrices[1] = unlimted7Price();
-    ridePrices[2] = thirtyDayUnlimited;
+    return ridePrices;
   }
 
-  public String getBestFare(){
+  public void getBestFare(){
     double bestFare = thirtyDayUnlimited;
 
     double pricePerRide;
 
-    for (double ridePrice : ridePrices ){
-      pricePerRide = ridePrice / numberOfRides;
+    getRidePrices();
 
-      if (pricePerRide < bestFare){
-        bestFare = pricePerRide;
+    for (double ridePrice : ridePrices ){
+      if (ridePrice < bestFare){
+        bestFare = ridePrice;
       }
     }
 
-    System.out.println("You should get the ");
+    System.out.println("Best fare is $" + bestFare + " per ride");
   }
 
   public static void main(String[] args) {
@@ -61,5 +63,7 @@ class TransitCalculator {
     TransitCalculator person1 = new TransitCalculator(22, 50);
 
     System.out.println(person1.unlimited7Price());
+
+    person1.getBestFare();
   }
 }
