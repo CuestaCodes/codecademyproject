@@ -1,4 +1,4 @@
-package com.cuestacodes.codeacademy;
+package com.cuestacodes.codecademy;
 
 /**
  * Java program that calulates the best fare option for a commuter based on days travelling,
