@@ -1,5 +1,5 @@
-# codeacademyproject
-Additonal project in Codeacademy's 'Learn Java' course.
+# codecademyproject
+Additonal project in Codecademy's 'Learn Java' course.
 
 ## Best Fare Calculator
 ### Overview
