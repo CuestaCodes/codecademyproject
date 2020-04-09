@@ -2,20 +2,20 @@ package com.cuestacodes.codeacademy;
 
 import java.util.ArrayList;
 
-// Java program that calulates the best fare option for a commuter based on days travelling,
-// number of rides expected to take during that time, age and if the commuter has a disability
 class TransitCalculator {
-  double[] fareOptions = {2.75, 33.00, 127.00};
+  static double[] nonConcfareOptions = {2.75, 33.00, 127.00};
 
-  double[] concFareOptions = {1.35, 16.50, 63.50};
+  static double[] concFareOptions = {1.35, 16.50, 63.50};
 
-  String[] fareTypes = {"Pay-per-ride", "7-Day Unlimited", "30-Day Unlimited"};
+  static String[] fareTypes = {"Pay-per-ride", "7-Day Unlimited", "30-Day Unlimited"};
 
-  double[] ridePrices = new double [3];
+  double[] fareOptions = nonConcfareOptions;
 
-  int numberOfDays;
+  double[] ridePrices = new double[3];
 
-  int numberOfRides;
+  int numOfDays;
+
+  int numOfRides;
 
   boolean concession = false;
 
@@ -23,47 +23,34 @@ class TransitCalculator {
     if (numOfDays < 0 || numOfDays > 30 || numOfRides < 0 || age < 0) {
       throw new IllegalArgumentException();
     } else {
-      numberOfDays = numOfDays;
-      numberOfRides = numOfRides;
+      this.numOfDays = numOfDays;
+      this.numOfRides = numOfRides;
 
       if (hasDisability || age > 65){
         concession = true;
+        this.fareOptions = concFareOptions;
       }
     }
   }
 
   // calculates overall price per ride using 7-Day Unlimited option
   public double unlimited7Price(){
-    int numOfSevenPasses = numberOfDays / 7;
+    int numOfSevenPasses = numOfDays / 7;
 
-    double priceTotal;
-
-    if (numberOfDays % 7 != 0){
+    if (numOfDays % 7 != 0){
       numOfSevenPasses++;
     }
 
-    if (concession) {
-      priceTotal = numOfSevenPasses * concFareOptions[1];
-    } else {
-      priceTotal = numOfSevenPasses * fareOptions[1];
-    }
-
-    double sevenPrice = priceTotal / numberOfRides;
+    double sevenPrice = numOfSevenPasses * fareOptions[1] / numOfRides;
 
     return sevenPrice;
   }
 
-  // calculates the price per ride for each fare option
+  // returns the price per ride for each fare option
   public double[] getRidePrices(){
-    if (concession) {
-      ridePrices[0] = concFareOptions[0];
-      ridePrices[2] = concFareOptions[2] / numberOfRides;
-    } else {
-      ridePrices[0] = fareOptions[0];
-      ridePrices[2] = fareOptions[2] / numberOfRides;
-    }
-
+    ridePrices[0] = fareOptions[0];
     ridePrices[1] = unlimited7Price();
+    ridePrices[2] = fareOptions[2] / numOfRides;
 
     return ridePrices;
   }
@@ -76,7 +63,7 @@ class TransitCalculator {
 
     double pricePerRide;
 
-    String concessionAvail = "";
+    String concessionAvail = "You do not qualify for a concession fair. ";
 
     getRidePrices();
 
@@ -89,28 +76,24 @@ class TransitCalculator {
     }
 
     if (concession) {
-      concessionAvail = "You qualify for a concession fare. ";
+      concessionAvail = "You do qualify for a concession fair. ";
     }
 
-    String bestFareFind = concessionAvail + "You should get the " + bestFareType + " at $" + bestFare + " per ride";
+    String bestFareFind = concessionAvail + "You should get the " + bestFareType + " at $" + bestFare + " per ride.";
 
     return bestFareFind;
   }
 
+  // Java program that calulates the best fare option for a commuter based on days travelling,
+  // number of rides expected to take during that time, age and if the commuter has a disability.
   public static void main(String[] args) {
-    int daysTravelling;
-    int individualRides;
+    int daysTravelling = 5;
+    int individualRides = 12;
+    boolean hasDisability = false;
+    int age = 67;
 
-    ArrayList<TransitCalculator> commuters = new ArrayList<TransitCalculator>();
-
-    commuters.add(new TransitCalculator(22, 50, false, 67));
-    commuters.add(new TransitCalculator(26, 54, false, 25));
-    commuters.add(new TransitCalculator(5, 12, true, 35));
-    commuters.add(new TransitCalculator(14, 28, false, 29));
-    commuters.add(new TransitCalculator(7, 2, false, 65));
-
-    for (int i = 0 ; i < commuters.size() ; i++){
-      System.out.println(commuters.get(i).getBestFare());
-    }
+    TransitCalculator commuter = new TransitCalculator(daysTravelling, individualRides, hasDisability, age);
+    System.out.println(commuter.getBestFare());
+    // System output: You do qualify for a concession fair. You should get the Pay-per-ride at $1.35 per ride.
   }
 }
